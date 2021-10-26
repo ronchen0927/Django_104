@@ -1,3 +1,5 @@
+{% load startswith %}
+
 <form action="" method="Post">
     {% csrf_token %}
     <input name="keyword" placeholder="請輸入關鍵字(職稱、公司名、技能專長)"><br />
@@ -29,7 +31,13 @@
     <tbody>
         {% for open in opening %}
         <tr>
-            <td>{{ open.date }}</td>
+            {% if open.date|str_startswith:'9999' %}
+                <td>
+                   <img src="{% static 'images/like-48px.png' %}" alt="like-48px" />
+                </td>
+            {% else %}
+                <td>{{ open.date }}</td>
+            {% endif %}
             <td>
                 <a href="{{ open.link }}" target="_blank">{{ open.job }}</a>
             </td>

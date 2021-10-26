@@ -1,22 +1,24 @@
 from bs4 import BeautifulSoup
 import grequests
 import datetime
-    
+
+SCRAPE_PAGE = 10  # scrape 10 pages
+THIS_YEAR = str(datetime.datetime.today().year)
 
 def sort_by_late_date(open):
-    return datetime.datetime.strptime(open['date'],"%m/%d")
+    return datetime.datetime.strptime(open['date'], "%Y/%m/%d")
     
 
 def scrape(keyword, area, jobexp):
     links = []
     opening = []
     
-    for page in range(1, 21):  # scrape 20 records
+    for page in range(1, SCRAPE_PAGE + 1):  # scrape 10 pages
         links.append(
             f"https://www.104.com.tw/jobs/search/?keyword={keyword}&area={area}&order=1&page={page}&jobexp={jobexp}&jobsource=2021indexpoc&ro=0")
             
     reqs = [grequests.get(link) for link in links]
-    response = grequests.imap(reqs, grequests.Pool(30))  # Parallel sending requests
+    response = grequests.imap(reqs, grequests.Pool(SCRAPE_PAGE))  # Parallel sending requests (grequests)
         
     for r in response:
         soup = BeautifulSoup(r.content, "lxml")
@@ -40,9 +42,9 @@ def scrape(keyword, area, jobexp):
             salary = block.find("span", {"class": "b-tag--default"})  # Compensation Package
 
             if date.getText().strip():
-                opening.append(dict(job=job.getText(), date=date.getText().strip(), link=job['href'], company=company.getText().strip(), city=city.getText(), experience=experience.getText(), education=education.getText(), salary=salary.getText()))
+                opening.append(dict(job=job.getText(), date=f"{THIS_YEAR}/{date.getText().strip()}", link=job['href'], company=company.getText().strip(), city=city.getText(), experience=experience.getText(), education=education.getText(), salary=salary.getText()))
             else:
-                opening.append(dict(job=job.getText(), date="12/31", link=job['href'], company=company.getText().strip(), city=city.getText(), experience=experience.getText(), education=education.getText(), salary=salary.getText()))
+                opening.append(dict(job=job.getText(), date="9999/12/31", link=job['href'], company=company.getText().strip(), city=city.getText(), experience=experience.getText(), education=education.getText(), salary=salary.getText()))
 
     opening = sorted(opening, reverse=True, key=sort_by_late_date)
     

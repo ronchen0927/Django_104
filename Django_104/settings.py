@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'y1*m7zet*v$_996@lum6$*hisybat1ee5t2%*tjw4l9v(1ltt3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -64,6 +64,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'builtins': ['django.templatetags.static']
         },
     },
 ]
@@ -117,5 +118,18 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
+
+# 執行collectstatic命令後會將專案中的靜態檔案（包括STATICFILES_DIRS、自帶admin的靜態檔案）收集到該目錄下面來
+#（所以不應該在該目錄下面放置自己的一些靜態檔案，因為會覆蓋掉）
+# 當 settings.py 中 DEBUG = False ，
+# Django 預設是不處理 static 檔案的，
+# 也就是說未經過特殊設定， STATICFILES_DIRS 設定是不運行的 ( django.contrib.staticfiles 不運行)
+
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STATIC_URL = '/static/'

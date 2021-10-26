@@ -17,8 +17,13 @@ from django.contrib import admin
 from django.urls import path
 from opening import views
 
+# 在`settings.py`同級的`urls.py`內還需要把`STATIC_URL`和django的url連線起來
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="Index"),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

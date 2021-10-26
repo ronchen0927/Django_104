@@ -21,4 +21,4 @@ def index(request):
         
         context["opening"] = scrape(keyword, area, jobexp)
     
-    return render(request, "opening/index.html", context)
+    return render(request, "index.html", context)
