@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .scraper import scrape
 
+
 def index(request):
     context = {}
     
