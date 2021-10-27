@@ -21,5 +21,6 @@ def index(request):
         jobexp = "%2C".join(jobexp)
         
         context["opening"] = scrape(keyword, int(pages), area, jobexp)
+        context["result_len"] = len(context["opening"])
     
     return render(request, "index.html", context)

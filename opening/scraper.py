@@ -36,7 +36,7 @@ def scrape(keyword, pages, area, jobexp):
 
             ultag = block.find("ul", {"class": "b-list-inline b-clearfix job-list-intro b-content"})
             litag = ultag.find_all("li")
-            city = litag[0]
+            city = litag[0]  # City name
             experience =  litag[1]  # Job exp
             education = litag[2]  # At least diploma education
             

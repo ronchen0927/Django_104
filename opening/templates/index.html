@@ -36,6 +36,9 @@
         </tr>
     </thead>
     <tbody>
+        {% if result_len %}
+            共搜尋到 {{ result_len }} 筆資料<br />
+        {% endif %}
         {% for open in opening %}
         <tr>
             {% if open.date|str_startswith:'9999' %}
