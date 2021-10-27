@@ -3,17 +3,24 @@
 <form action="" method="Post">
     {% csrf_token %}
     <input name="keyword" placeholder="請輸入關鍵字(職稱、公司名、技能專長)"><br />
-    <input type="checkbox" name="area1" value="6001001000">台北市
-    <input type="checkbox" name="area2" value="6001002000">新北市
-    <input type="checkbox" name="area3" value="6001006000">新竹市
-    <input type="checkbox" name="area4" value="6001008000">台中市
-    <input type="checkbox" name="area5" value="6001014000">台南市
-    <input type="checkbox" name="area6" value="6001016000">高雄市<br />
-    <input type="checkbox" name="experience1" value="1">1年以下
-    <input type="checkbox" name="experience2" value="3">1-3年
-    <input type="checkbox" name="experience3" value="5">3-5年
-    <input type="checkbox" name="experience4" value="10">5-10年
-    <input type="checkbox" name="experience5" value="99">10年以上<br />
+    <input type=number name="pages" placeholder="想爬取幾頁的資料"><br />
+    <div>
+        選擇地區
+        <label><input type="checkbox" name="area1" value="6001001000">台北市</label>
+        <label><input type="checkbox" name="area2" value="6001002000">新北市</label>
+        <label><input type="checkbox" name="area3" value="6001006000">新竹市</label>
+        <label><input type="checkbox" name="area4" value="6001008000">台中市</label>
+        <label><input type="checkbox" name="area5" value="6001014000">台南市</label>
+        <label><input type="checkbox" name="area6" value="6001016000">高雄市</label>
+    </div>
+    <div>
+        經歷要求
+        <label><input type="checkbox" name="experience1" value="1">1年以下</label>
+        <label><input type="checkbox" name="experience2" value="3">1-3年</label>
+        <label><input type="checkbox" name="experience3" value="5">3-5年</label>
+        <label><input type="checkbox" name="experience4" value="10">5-10年</label>
+        <label><input type="checkbox" name="experience5" value="99">10年以上</label>
+    </div>
     <input type="submit" value="查詢">
 </form>
 <table border="1" cellpadding="0" cellspacing="0">

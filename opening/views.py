@@ -7,6 +7,7 @@ def index(request):
     
     if request.method == "POST":
         keyword = request.POST["keyword"]
+        pages = request.POST["pages"]
         area = []
         jobexp = []
         
@@ -19,6 +20,6 @@ def index(request):
         area = "%2C".join(area)
         jobexp = "%2C".join(jobexp)
         
-        context["opening"] = scrape(keyword, area, jobexp)
+        context["opening"] = scrape(keyword, int(pages), area, jobexp)
     
     return render(request, "index.html", context)

@@ -2,23 +2,23 @@ from bs4 import BeautifulSoup
 import grequests
 import datetime
 
-SCRAPE_PAGE = 10  # scrape 10 pages
 THIS_YEAR = str(datetime.datetime.today().year)
 
 def sort_by_late_date(open):
     return datetime.datetime.strptime(open['date'], "%Y/%m/%d")
     
 
-def scrape(keyword, area, jobexp):
+def scrape(keyword, pages, area, jobexp):
     links = []
     opening = []
+    job_link = []
     
-    for page in range(1, SCRAPE_PAGE + 1):  # scrape 10 pages
+    for page in range(1, pages+1):
         links.append(
             f"https://www.104.com.tw/jobs/search/?keyword={keyword}&area={area}&order=1&page={page}&jobexp={jobexp}&jobsource=2021indexpoc&ro=0")
             
     reqs = [grequests.get(link) for link in links]
-    response = grequests.imap(reqs, grequests.Pool(SCRAPE_PAGE))  # Parallel sending requests (grequests)
+    response = grequests.imap(reqs, grequests.Pool(pages))  # Parallel sending requests (grequests)
         
     for r in response:
         soup = BeautifulSoup(r.content, "lxml")
@@ -26,8 +26,9 @@ def scrape(keyword, area, jobexp):
         
         for block in blocks:
             job = block.find("a", {"class": "js-job-link"})  # Job title
-            if not job:
+            if not job or job['href'] in job_link:
                 continue
+            job_link.append(job['href'])
             
             date = block.find("span", {"class": "b-tit__date"})  # Published date
             
