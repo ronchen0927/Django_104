@@ -1,27 +1,23 @@
 from bs4 import BeautifulSoup
-import grequests
+import requests
 import datetime
 
 THIS_YEAR = str(datetime.datetime.today().year)
+
 
 def sort_by_late_date(open):
     return datetime.datetime.strptime(open['date'], "%Y/%m/%d")
     
 
-def scrape(keyword, pages, area, jobexp):
-    links = []
+def sync_scrape(keyword, area, pages=5, jobexp=1):
     opening = []
     job_link = []
     
     for page in range(1, pages+1):
-        links.append(
+        response = requests.get(
             f"https://www.104.com.tw/jobs/search/?keyword={keyword}&area={area}&order=1&page={page}&jobexp={jobexp}&jobsource=2021indexpoc&ro=0")
-            
-    reqs = [grequests.get(link) for link in links]
-    response = grequests.imap(reqs, grequests.Pool(pages))  # Parallel sending requests (grequests)
+        soup = BeautifulSoup(response.content, "lxml")
         
-    for r in response:
-        soup = BeautifulSoup(r.content, "lxml")
         blocks = soup.find_all("div", {"class": "b-block__left"})  # Job block
         
         for block in blocks:

@@ -3,7 +3,13 @@
 <form action="" method="Post">
     {% csrf_token %}
     <input name="keyword" placeholder="請輸入關鍵字(職稱、公司名、技能專長)"><br />
-    <input type=number name="pages" placeholder="想爬取幾頁的資料"><br />
+    <input type=number name="pages" value="5" placeholder="想爬取幾頁的資料"><br />
+    <label>請選擇「同步」或「非同步」的爬蟲方式<br />
+        <select name="method">
+            <option value="async">非同步 Async (速度較快)</option>
+            <option value="sync">同步 Sync (速度較慢)</option>
+        </select>
+    </label>
     <div>
         選擇地區
         <label><input type="checkbox" name="area1" value="6001001000">台北市</label>
@@ -38,6 +44,9 @@
     <tbody>
         {% if result_len %}
             共搜尋到 {{ result_len }} 筆資料<br />
+        {% endif %}
+        {% if time %}
+            搜尋時間： {{ time }} 秒
         {% endif %}
         {% for open in opening %}
         <tr>
