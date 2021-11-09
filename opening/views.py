@@ -15,10 +15,10 @@ def index(request):
         jobexp = []
         
         for i in range(6):
-            if request.POST.get(f'area{i+1}'):
-                area.append(request.POST[f'area{i+1}'])
+            if request.POST.get(f"area{i+1}"):
+                area.append(request.POST[f"area{i+1}"])
             if request.POST.get(f"experience{i+1}"):
-                jobexp.append(request.POST[f'experience{i+1}'])
+                jobexp.append(request.POST[f"experience{i+1}"])
                 
         area = "%2C".join(area)
         jobexp = "%2C".join(jobexp)

@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load startswith %}
 
-
 {% block content %}
 <form action="" method="Post">
     {% csrf_token %}
@@ -22,20 +21,20 @@
     </label>
     <div>
         選擇地區
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="area1" value="6001001000">台北市</label>
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="area2" value="6001002000">新北市</label>
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="area3" value="6001006000">新竹市</label>
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="area4" value="6001008000">台中市</label>
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="area5" value="6001014000">台南市</label>
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="area6" value="6001016000">高雄市</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="area1" value="6001001000">台北市</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="area2" value="6001002000">新北市</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="area3" value="6001006000">新竹市</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="area4" value="6001008000">台中市</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="area5" value="6001014000">台南市</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="area6" value="6001016000">高雄市</label>
     </div>
     <div>
         經歷要求
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="experience1" value="1">1年以下</label>
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="experience2" value="3">1-3年</label>
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="experience3" value="5">3-5年</label>
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="experience4" value="10">5-10年</label>
-        <label><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" name="experience5" value="99">10年以上</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="experience1" value="1">1年以下</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="experience2" value="3">1-3年</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="experience3" value="5">3-5年</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="experience4" value="10">5-10年</label>
+        <label><input class="form-check-input" type="checkbox" id="flexCheckDefault" name="experience5" value="99">10年以上</label>
     </div>
     <input class="btn btn-success" type="submit" value="查詢">
 </form>
@@ -79,4 +78,4 @@
         {% endfor %}
     </tbody>
 </table>
-{% endblock  %}
+{% endblock %}
