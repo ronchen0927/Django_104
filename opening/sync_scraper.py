@@ -36,7 +36,7 @@ def sync_scrape(keyword, area, pages=5, jobexp=1):
             experience =  litag[1]  # Job exp
             education = litag[2]  # At least diploma education
             
-            salary = block.find("span", {"class": "b-tag--default"})  # Compensation Package
+            salary = block.find("div", {"class": "job-list-tag b-content"}).findChild()  # Compensation Package
 
             if date.getText().strip():
                 opening.append(dict(job=job.getText(), date=f"{THIS_YEAR}/{date.getText().strip()}", link=job['href'], company=company.getText().strip(), city=city.getText(), experience=experience.getText(), education=education.getText(), salary=salary.getText()))
