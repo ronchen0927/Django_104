@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .async_scraper import async_scrape
 from .sync_scraper import sync_scrape
 import time
-
+import asyncio
 
 def index(request):
     context = {}
@@ -27,9 +27,9 @@ def index(request):
         
         if method == 'async':
             try:
-                context["opening"] = async_scrape(keyword, area, int(pages), jobexp)
+                context["opening"] = asyncio.run(async_scrape(keyword, area, int(pages), jobexp))
             except:
-                context["opening"] = async_scrape(keyword, area)
+                context["opening"] = asyncio.run(async_scrape(keyword, area))
         else:
             try:
                 context["opening"] = sync_scrape(keyword, area, int(pages), jobexp)

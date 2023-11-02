@@ -1,6 +1,8 @@
+import aiohttp
+import asyncio
 from bs4 import BeautifulSoup
-import grequests
 import datetime
+
 
 THIS_YEAR = str(datetime.datetime.today().year)
 
@@ -9,7 +11,7 @@ def sort_by_late_date(open):
     return datetime.datetime.strptime(open['date'], "%Y/%m/%d")
     
 
-def async_scrape(keyword, area, pages=5, jobexp=1):
+async def async_scrape(keyword, area, pages=5, jobexp=1):
     links = []
     opening = []
     job_link = []
@@ -17,12 +19,17 @@ def async_scrape(keyword, area, pages=5, jobexp=1):
     for page in range(1, pages+1):
         links.append(
             f"https://www.104.com.tw/jobs/search/?keyword={keyword}&area={area}&order=1&page={page}&jobexp={jobexp}&jobsource=2021indexpoc&ro=0")
-            
-    reqs = [grequests.get(link) for link in links]
-    response = grequests.imap(reqs, grequests.Pool(pages))  # Asynchronous sending requests (grequests)
         
-    for r in response:
-        soup = BeautifulSoup(r.content, "lxml")
+    async def fetch(session, url):
+        async with session.get(url) as response:
+            return await response.text()
+
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch(session, link) for link in links]
+        responses = await asyncio.gather(*tasks)
+        
+    for response in responses:
+        soup = BeautifulSoup(response, "lxml")
         blocks = soup.find_all("div", {"class": "b-block__left"})  # Job block
         
         for block in blocks:
